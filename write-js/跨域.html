@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .basic-grey {
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 500px;
+      /* background: #F7F7F7; */
+      padding: 25px 15px 25px 10px;
+      font: 12px Georgia, "Times New Roman", Times, serif;
+      color: #888;
+      text-shadow: 1px 1px 1px #FFF;
+      border: 1px solid #E4E4E4;
+    }
+
+    .basic-grey label {
+      display: block;
+      margin: 0px;
+    }
+
+    .basic-grey label>span {
+      float: left;
+      width: 20%;
+      text-align: right;
+      padding-right: 10px;
+      margin-top: 10px;
+      color: #888;
+    }
+
+    .basic-grey input[type="text"] {
+      border: 1px solid #DADADA;
+      color: #888;
+      height: 30px;
+      margin-bottom: 16px;
+      margin-right: 6px;
+      margin-top: 2px;
+      outline: 0 none;
+      padding: 3px 3px 3px 5px;
+      width: 70%;
+      font-size: 12px;
+      line-height: 15px;
+      box-shadow: inset 0px 1px 4px #ECECEC;
+      -moz-box-shadow: inset 0px 1px 4px #ECECEC;
+      -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
+    }
+
+    .basic-grey .button {
+      background: #66C1E4;
+      border: none;
+      padding: 10px 25px 10px 25px;
+      color: #FFF;
+      box-shadow: 1px 1px 5px #B6B6B6;
+      border-radius: 3px;
+      text-shadow: 1px 1px 1px #9E3F3F;
+      cursor: pointer;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .basic-grey .button:hover {
+      background: #3EB1DD
+    }
+  </style>
+</head>
+
+<body>
+  <form id="webDataForm" name="webDataForm" action="/rta/submitNoInputJob2" method="post" class="basic-grey"
+    target="iframe_display">
+    <label>
+      <span>executeUuid :</span>
+      <input id="executeUuid" type="text" name="executeUuid" value="" autocomplete="false" />
+    </label>
+    <label>
+      <span>batch :</span>
+      <input id="batch" type="text" name="batch" value="" autocomplete="false" />
+    </label>
+    <label>
+      <span>event :</span>
+      <input id="event" type="text" name="event" value="" autocomplete="false" />
+    </label>
+    <label>
+      <span>jobFiles :</span>
+      <input id="jobFiles" type="text" name="jobFiles" value="" autocomplete="false" />
+    </label>
+    <label>
+      <span>modelId :</span>
+      <input id="modelId" type="text" name="modelId" value="" autocomplete="false" />
+    </label>
+    <label>
+      <span>token :</span>
+      <input id="token" type="text" name="token" value="" autocomplete="false" />
+    </label>
+    <input id="submit" type="button" class="button" value="提交" />
+  </form>
+  <iframe id="iframe_display" name="iframe_display" style="display: none;"></iframe>
+  <script src="./jquery-3.6.3.min.js"></script>
+  <script src="./jquery.form.js"></script>
+  <script>
+
+    function debounce (func, wait) {
+      var timeout;
+      return function () {
+        var context = this;
+        var args = arguments;
+        clearTimeout(timeout)
+        timeout = setTimeout(function () {
+          func.apply(context, args)
+        }, wait);
+      }
+    }
+
+    function ajaxSubmit () {
+      $("#webDataForm").ajaxSubmit(function (data) {
+        if (data.code && data.code === "0") {
+          parent.document.querySelector(".ant-modal-close-x").click()
+          parent.document.querySelector("#erupt-btn-query").click()
+        } else {
+          alert(data.msg);
+        }
+      });
+    }
+
+    $(function () {
+      var node = document.getElementById('submit')
+      node.onclick = debounce(ajaxSubmit, 1000)
+    })
+    
+  </script>
+
+</body>
+
+</html>

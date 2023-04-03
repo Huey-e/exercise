@@ -762,11 +762,11 @@ export default {
 ### 父子组件通讯 
 
 1.  props 与 $emit
-2.   与 children
+2.  $parent与 $children
 
 ### 隔代组件通讯 
 
-1.   与 listeners
+1.  $attrs与 listeners
 2.  provide 和 inject
 
 ### 父子、兄弟、隔代组件通讯 

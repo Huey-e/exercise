@@ -51,11 +51,11 @@ console.log('getName: ',hjy.getName())
 
 这是上面这段代码在`chrome`控制台中显示的结果：
 
-![image_5774a4db.png](../images//image_5774a4db.png) image.png
+![image_5774a4db.png](./images/image_5774a4db.png) image.png
 
 可以看到，我们先是创建了一个空的构造函数`Person`，然后创建了一个`Person`的实例`hjy`，`hjy`本身是没有挂载任何属性和方法的，但是它有一个`[[Prototype]]`内置属性，这个属性是个对象，里面有`name、age`属性和`getName`函数，定睛一看，这玩意儿可不就是上面写的`Person.prototype`对象嘛。事实上，`Person.prototype`和`hjy`的`[[Prototype]]`都指向同一个对象，这个对象对于`Person`构造函数而言叫做原型对象，对于`hjy`实例而言叫做原型。下面一张图直观地展示上述代码中构造函数、实例、原型之间的关系：
 
-![image_200f521f.png](../images//image_200f521f.png) 原型.png
+![image_200f521f.png](./images/image_200f521f.png) 原型.png
 
 因此，构造函数、原型和实例的关系是这样的：\_每个构造函数都有一个原型对象（实例的原型），原型有一个`constructor`属性指回构造函数，而实例有一个内部指针指向原型。\_ 在`chrome、firefox、safari`浏览器环境中这个指针就是`__proto__`，其他环境下没有访问`[[Prototype]]`的标准方式。
 
@@ -69,7 +69,7 @@ console.log('getName: ',hjy.getName())
 
 在原型链中，如果在对象上找不到需要的属性或者方法，引擎就会继续在`[[Prototype]]`指向的原型上查找，同理，如果在后者也没有找到需要的东西，引擎就会继续查找它的`[[Prototype]]`指向的原型。上图理解一下：
 
-![image_c80c23f3.png](../images//image_c80c23f3.png) 原型链1.png
+![image_c80c23f3.png](./images/image_c80c23f3.png) 原型链1.png
 
 ## 理解继承 
 
@@ -77,7 +77,7 @@ console.log('getName: ',hjy.getName())
 
 以咱们人类为例，咱全地球人都是一个脑袋、双手双脚，很多基本特征都是一样的。但人类也可以细分种类，有黄种人、白种人、黑种人，咱们如果要定义这三种人，无需再说一个脑袋、双手双脚之类的共同特征，黄种人就是在人类的基础上将皮肤变为黄色，白种人皮肤为白色，黑种人为黑色，如果有其他特征就再新增即可，例如蓝眼睛、黄头发等等。
 
-![image_21cd51fa.png](../images//image_21cd51fa.png) renleiclass.png
+![image_21cd51fa.png](./images/image_21cd51fa.png) renleiclass.png
 
 如果用代码封装，咱们就可以将人类定义为基类或者超类，拥有脑袋、手、足等属性，说话、走路等行为。黄种人、白种人、黑种人为子类，自动复制父类的属性和行为到自身，然后在此基础上新增或者重写某些属性和行为，例如黄种人拥有黄皮肤、黑头发。这就是继承的思想。
 
@@ -113,7 +113,7 @@ console.log(hjy.hand) // 2
 
 上述代码中的`Person构造函数`、`YellowRace构造函数`、`hjy实例`之间的关系如下图：
 
-![image_3ff33df2.png](../images//image_3ff33df2.png)根据原型链的特性，当我们查找`hjy`实例的`head`和`hand`属性时，由于`hjy`本身并没有这两个属性，引擎就会去查找`hjy`的原型，还是没有，继续查找`hjy`原型的原型，也就是`Person原型对象`，结果就找到了。就这样，`YellowRace`和`Person`之间通过原型链实现了继承关系。
+![image_3ff33df2.png](./images/image_3ff33df2.png)根据原型链的特性，当我们查找`hjy`实例的`head`和`hand`属性时，由于`hjy`本身并没有这两个属性，引擎就会去查找`hjy`的原型，还是没有，继续查找`hjy`原型的原型，也就是`Person原型对象`，结果就找到了。就这样，`YellowRace`和`Person`之间通过原型链实现了继承关系。
 
 但这种继承是有问题的：
 
@@ -170,7 +170,7 @@ console.log(laowang.eyes) // black
 
 上述代码中，`YellowRace`在内部使用`call`调用构造函数，这样在创建`YellowRace`的实例时，`Person`就会在`YellowRace`实例的上下文中执行，于是每个`YellowRace`实例都会拥有自己的`colors`属性，而且这个过程是可以传递参数的，`Person.call()`接受的参数最终会赋给`YellowRace`的实例。它们之间的关系如下图所示：
 
-![image_8ccffe6a.png](../images//image_8ccffe6a.png) daoyonggouzao.png
+![image_8ccffe6a.png](./images/image_8ccffe6a.png) daoyonggouzao.png
 
 虽然盗用构造函数解决了原型链继承的两大问题，但是它也有自己的缺点：
 
@@ -239,7 +239,7 @@ console.log(hjy.getEyes()) // black
 
 此时`Person`构造函数、`YellowRace`构造函数、`hjy`和`laowang`实例之间的关系如下图：
 
-![image_7b15afbb.png](../images//image_7b15afbb.png) 组合继承.png
+![image_7b15afbb.png](./images/image_7b15afbb.png) 组合继承.png
 
 相较于盗用构造函数继承，组合继承额外的将`YellowRace`的原型对象（同时也是`hjy`和`laowang`实例的原型）指向了`Person`的原型对象，这样就集合了原型链继承和盗用构造函数继承的优点。
 
@@ -313,11 +313,11 @@ console.log(laowang.age) // 32
 
 上述代码中各个对象之间的关系仍然可以用一张图展示：
 
-![image_4365ecfc.png](../images//image_4365ecfc.png) 原型式继承.png
+![image_4365ecfc.png](./images/image_4365ecfc.png) 原型式继承.png
 
 这种关系和原型链继承中原型与实例之间的关系基本是一致的，不过上图中的`F`构造函数是一个中间函数，在`object.create()`执行完后它就随着函数作用域一起被回收了。那最后`hjy`的`constructor`会指向何处呢？下面分别是浏览器和`node`环境下的打印结果：
 
-![image_fb826aac.png](../images//image_fb826aac.png) image.png ![image_7b8687f5.png](../images//image_7b8687f5.png) image.png
+![image_fb826aac.png](./images/image_fb826aac.png) image.png ![image_7b8687f5.png](./images/image_7b8687f5.png) image.png
 
 查阅资料得知`chrome`打印的结果是它内置的，不是`javascript`语言标准。具体是个啥玩意儿我也不知道了🤣。
 
@@ -406,7 +406,7 @@ console.log(hjy.getEyes())
 
 如图，寄生组合式继承与组合式继承中的原型链关系是一样的：
 
-![image_0f0943bb.png](../images//image_0f0943bb.png) 组合继承.png
+![image_0f0943bb.png](./images/image_0f0943bb.png) 组合继承.png
 
 ## 判断构造函数与实例关系 
 
